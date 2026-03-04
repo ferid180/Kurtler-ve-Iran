@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kürtler ve Iran — Infografik Seri</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: #0e0e10;
+  font-family: 'Crimson Pro', Georgia, serif;
+  padding: 28px 16px 60px;
+}
+
+.ui-header {
+  max-width: 1120px;
+  margin: 0 auto 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  border-bottom: 1px solid rgba(200,168,75,0.2);
+  padding-bottom: 16px;
+}
+.ui-title { font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 4px; color: #c8a84b; text-transform: uppercase; }
+.ui-hint  { font-size: 11px; color: #444; letter-spacing: 1px; }
+
+.grid {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+/* ── Base card ── */
+.card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: transform .25s, box-shadow .25s;
+}
+.card:hover { transform: translateY(-5px); box-shadow: 0 24px 60px rgba(0,0,0,.7); }
+
+/* ── Cover ── */
+.cover { background: #09090c; border: 1px solid rgba(200,168,75,0.15); }
+.cover .stripe { position:absolute;left:0;top:0;bottom:0;width:5px;background:linear-gradient(to bottom,#c8a84b,#d64c2e); }
+.cover .diag   { position:absolute;inset:0;background:repeating-linear-gradient(-45deg,transparent,transparent 38px,rgba(200,168,75,.018) 38px,rgba(200,168,75,.018) 39px); }
+.cover .arabic { position:absolute;right:-10px;bottom:-30px;font-size:200px;line-height:1;color:rgba(200,168,75,.04);font-family:serif;user-select:none;pointer-events:none; }
+.cover .trule  { position:absolute;top:44px;left:30px;right:30px;height:1px;background:linear-gradient(to right,#c8a84b,transparent); }
+.cover .brule  { position:absolute;bottom:44px;left:30px;right:30px;height:1px;background:linear-gradient(to right,#c8a84b,transparent); }
+.cover .kicker { position:absolute;top:26px;left:30px;font-family:'Cinzel',serif;font-size:7px;letter-spacing:3px;color:#c8a84b;text-transform:uppercase; }
+.cover .pg     { position:absolute;top:26px;right:30px;font-family:'Cinzel',serif;font-size:8px;color:#2a2520; }
+.cover .body   { position:absolute;left:30px;top:58px;right:16px; }
+.cover .h1     { font-family:'Cinzel',serif;font-size:clamp(26px,4.5vw,40px);font-weight:900;color:#e8e2d4;line-height:1.1;letter-spacing:1px;margin-top:14px; }
+.cover .h1 em  { display:block;font-family:'Crimson Pro',serif;font-style:italic;font-weight:300;color:#c8a84b;font-size:.82em;margin-top:8px; }
+.cover .desc   { position:absolute;bottom:56px;left:30px;right:20px;font-size:10.5px;line-height:1.75;color:#6a6460;letter-spacing:.2px; }
+
+/* ── Era card ── */
+.era { background:#0c0c0f; border:1px solid rgba(255,255,255,.04); }
+.era.red  { --ac:#d64c2e; --acd:#3d1810; }
+.era.blue { --ac:#4a9eff; --acd:#0d2540; }
+.era.grn  { --ac:#7ab87a; --acd:#1a2e1a; }
+.era.gld  { --ac:#c8a84b; --acd:#2e2410; }
+.era .strip { position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--ac); }
+.era .head  { position:absolute;left:4px;right:0;top:0;padding:14px 16px 10px;border-bottom:1px solid rgba(255,255,255,.05); }
+.era .badge { display:inline-block;background:var(--acd);border:1px solid var(--ac);padding:2px 8px;margin-bottom:7px;font-family:'Cinzel',serif;font-size:7px;letter-spacing:2px;color:var(--ac);text-transform:uppercase; }
+.era .etitle{ font-family:'Cinzel',serif;font-size:clamp(12px,2.2vw,17px);font-weight:700;color:#e8e2d4;line-height:1.25;letter-spacing:.4px; }
+.era .pill  { position:absolute;top:12px;right:12px;font-family:'Cinzel',serif;font-size:6px;letter-spacing:1.5px;text-transform:uppercase;padding:3px 7px;border:1px solid var(--ac);color:var(--ac); }
+.era .events{ position:absolute;left:4px;right:0;bottom:32px;overflow:hidden; }
+.ev { padding:9px 14px 7px;border-bottom:1px solid rgba(255,255,255,.035);position:relative; }
+.ev::before { content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--ac);opacity:.35; }
+.ev .edate  { font-family:'Cinzel',serif;font-size:6px;letter-spacing:1.5px;color:#4a4540;text-transform:uppercase;margin-bottom:2px; }
+.ev .ename  { font-family:'Cinzel',serif;font-size:clamp(9px,1.7vw,11px);font-weight:700;color:#ddd8d0;margin-bottom:4px;line-height:1.3; }
+.ev .edesc  { font-size:clamp(9px,1.5vw,10.5px);line-height:1.6;color:#7a7470;font-weight:300; }
+.ev .eimp   { margin-top:4px;font-family:'Cinzel',serif;font-size:6px;letter-spacing:1.2px;text-transform:uppercase;color:var(--ac); }
+.era .foot  { position:absolute;bottom:0;left:4px;right:0;padding:6px 14px;border-top:1px solid rgba(255,255,255,.04);display:flex;justify-content:space-between;align-items:center; }
+.era .foot .brand { font-family:'Cinzel',serif;font-size:6px;letter-spacing:1.5px;color:#252520;text-transform:uppercase; }
+.era .foot .pg    { font-family:'Cinzel',serif;font-size:7.5px;color:var(--ac);opacity:.5; }
+
+/* ── Closing ── */
+.closing { background:#080809;border:1px solid rgba(200,168,75,.1); }
+.closing .strip  { position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(to bottom,#c8a84b,#d64c2e); }
+.closing .bglines{ position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 26px,rgba(200,168,75,.012) 26px,rgba(200,168,75,.012) 27px); }
+.closing .inner  { position:absolute;inset:0;left:4px;padding:20px 20px 14px;display:flex;flex-direction:column; }
+.closing .ck     { font-family:'Cinzel',serif;font-size:6.5px;letter-spacing:3px;color:#c8a84b;text-transform:uppercase;margin-bottom:7px; }
+.closing .ct     { font-family:'Cinzel',serif;font-size:clamp(15px,2.8vw,21px);font-weight:900;color:#e8e2d4;line-height:1.2;margin-bottom:10px; }
+.closing .rule   { height:1px;background:linear-gradient(to right,#c8a84b,transparent);margin-bottom:12px; }
+.sg   { display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:12px; }
+.sc   { background:#111116;border:1px solid rgba(200,168,75,.1);padding:9px 7px;text-align:center; }
+.sc .sn { font-family:'Cinzel',serif;font-size:clamp(17px,3vw,24px);font-weight:900;color:#c8a84b;display:block;line-height:1;margin-bottom:4px; }
+.sc .sl { font-family:'Cinzel',serif;font-size:6px;letter-spacing:1px;text-transform:uppercase;color:#454540; }
+.ot  { font-family:'Cinzel',serif;font-size:6.5px;letter-spacing:2px;color:#c8a84b;text-transform:uppercase;margin-bottom:7px; }
+.ol  { display:flex;gap:5px;flex-wrap:wrap; }
+.otag{ background:#1a100a;border:1px solid rgba(214,76,46,.3);padding:3px 7px;font-family:'Cinzel',serif;font-size:7.5px;letter-spacing:.8px;color:#d64c2e; }
+.closing .cf { margin-top:auto;padding-top:10px;border-top:1px solid rgba(255,255,255,.04);font-family:'Cinzel',serif;font-size:6px;letter-spacing:1.5px;color:#1e1e1e;text-transform:uppercase; }
+
+/* ── Lightbox ── */
+.lb { display:none;position:fixed;inset:0;background:rgba(0,0,0,.94);z-index:9999;align-items:center;justify-content:center;padding:20px; }
+.lb.on { display:flex; }
+.lb-box { position:relative;width:min(440px,90vw); }
+.lb-slot { width:100%; }
+.lb-slot .card { width:100%;cursor:default; }
+.lb-slot .card:hover { transform:none;box-shadow:none; }
+.lb-x  { position:absolute;top:-38px;right:0;background:none;border:none;color:#555;font-size:24px;cursor:pointer;transition:color .2s; }
+.lb-x:hover { color:#c8a84b; }
+.lb-nav { position:absolute;top:50%;transform:translateY(-50%);width:calc(100% + 80px);left:-40px;display:flex;justify-content:space-between;pointer-events:none; }
+.lb-btn { pointer-events:all;background:rgba(200,168,75,.1);border:1px solid rgba(200,168,75,.2);color:#c8a84b;width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;transition:background .2s; }
+.lb-btn:hover { background:rgba(200,168,75,.25); }
+.lb-count { position:absolute;bottom:-28px;left:50%;transform:translateX(-50%);font-family:'Cinzel',serif;font-size:9px;letter-spacing:3px;color:#333;white-space:nowrap; }
+
+@media(max-width:900px){ .grid{ grid-template-columns:repeat(2,1fr); } }
+@media(max-width:560px){ .grid{ grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+
+<div class="ui-header">
+  <div class="ui-title">Kürtler ve Iran — Infografik Seri</div>
+  <div class="ui-hint">Karta tikla &rarr; büyüt &rarr; ekran görüntüsü al</div>
+</div>
+
+<div class="grid" id="grid">
+
+<div class="card cover">
+  <div class="diag"></div><div class="arabic">كوردستان</div><div class="stripe"></div>
+  <div class="trule"></div><div class="brule"></div>
+  <div class="kicker">Tarihsel Bellek · Siyasi Cografya · Direnis</div>
+  <div class="pg">01 / 13</div>
+  <div class="body"><div class="h1">Kürtler<br>ve Iran<em>Mücadele<br>Kronolojisi</em></div></div>
+  <div class="desc">770'den 2022'ye: Iran cografyasinda Kürt siyasi<br>örgütlenmesinin ve silahli direnisinin kronolojisi.</div>
+</div>
+
+<div class="card era blue">
+  <div class="strip"></div>
+  <div class="head"><div class="badge">770 – 1169</div><div class="etitle">Erken Kürt<br>Hanedanliklari</div><div class="pill">Siyasi</div></div>
+  <div class="events" style="top:92px">
+    <div class="ev"><div class="edate">770 — 827</div><div class="ename">Sadaki Kürt Devleti</div><div class="edesc">Urmiye çevresinde kurulan erken dönem Kürt siyasi yapisi. Merkezi Iran otoritesiyle ilk sistematik çatismalarin kaydedildigi dönem.</div><div class="eimp">▲ Temel olusum</div></div>
+    <div class="ev"><div class="edate">959 — 1121</div><div class="ename">Hasnaviler ve Annaziler</div><div class="edesc">Kirmanshah ve çevresinde iki paralel Kürt hanedanligi. Bölgede Kürt siyasi egemenliginin en uzun soluklu örneklerinden biri.</div><div class="eimp">▲ Bölgesel özerklik</div></div>
+  </div>
+  <div class="foot"><span class="brand">Kürtler ve Iran</span><span class="pg">02 / 13</span></div>
+</div>
+
+<div class="card era blue">
+  <div class="strip"></div>
+  <div class="head"><div class="badge">1169 – 1867</div><div class="etitle">Ardelan Prensligji</div><div class="pill">Siyasi</div></div>
+  <div class="events" style="top:84px">
+    <div class="ev"><div class="edate">~1169 — 1867</div><div class="ename">~700 Yillik Özerk Yapi</div><div class="edesc">Kürt tarihindeki en uzun soluklu siyasi yapi. Senendec merkezli Ardelan Prensligji yedi asir boyunca dönemin büyük güçleriyle müzakere ve çatisma içinde olmustur. Kaçar hanedanligi tarafindan sona erdirilmistir.</div><div class="eimp">▲ Uzun süreli özerklik modeli</div></div>
+  </div>
+  <div class="foot"><span class="brand">Kürtler ve Iran</span><span class="pg">03 / 13</span></div>
+</div>
+
+<div class="card era blue">
+  <div class="strip"></div>
+  <div class="head"><div class="badge">1639</div><div class="etitle">Qasr-i Sirin<br>Antlasmasi</div><div class="pill">Diplomasi</div></div>
+  <div class="events" style="top:96px">
+    <div class="ev"><div class="edate">1639</div><div class="ename">Osmanli–Safevi Sinir Antlasmasi</div><div class="edesc">Qasr-i Sirin Antlasmasi, Kürdistan topraklarini Türkiye ve Iran arasinda ikiye böldu. Kürtler bu antlasmaya taraf tutulmadi; sinir, Kürt halkinin iradesi gözetilmeksizin çizildi. Kendi yurtlarinda ikiye bölünen Kürtler için bu antlasma, siyasi bellekte derin bir yara olarak kaldi.</div><div class="eimp">▲ Kürdistan'in zorla bölünmesi</div></div>
+  </div>
+  <div class="foot"><span class="brand">Kürtler ve Iran</span><span class="pg">04 / 13</span></div>
+</div>
+
+<div class="card era red">
+  <div class="strip"></div>
+  <div class="head"><div class="badge">1880 – 1918</div><div class="etitle">Ilk Modern<br>Isyanlar</div><div class="pill">Silahli</div></div>
+  <div class="events" style="top:96px">
+    <div class="ev"><div class="edate">1880</div><div class="ename">Ubeydullah Nehri Isyani</div><div class="edesc">Hem Iran hem Osmanli topraklarini kapsayan ilk genis kapsamli Kürt isyani. Ubeydullah, Kürt birliginin saglanmasi gerektigini açikça dile getiren erken milliyetçi figürlerden biridir.</div><div class="eimp">▲ Ilk sinir-ötesi hareket</div></div>
+    <div class="ev"><div class="edate">1918</div><div class="ename">Ismail Sikak Isyani</div><div class="edesc">1. Dünya Savasi'nin yarattigi boslugu kullanan Urmiyeli asiret lideri öncülügünde gerçeklesen isyan.</div><div class="eimp">▲ Savas dönemine özgü firsat</div></div>
+  </div>
+  <div class="foot"><span class="brand">Kürtler ve Iran</span><span class="pg">05 / 13</span></div>
+</div>
+
+<div class="card era grn">
+  <div class="strip"></div>
+  <div class="head"><div class="badge">1920'ler – 1945</div><div class="etitle">Pehlevi Baskisi<br>ve Ilk Örgütlenme</div><div class="pill">Kültürel</div></div>
+  <div class="events" style="top:100px">
+    <div class="ev"><div class="edate">1921 — 1940</div><div class="ename">Reza Sah'in Asimilasyon Politikalari</div><div class="edesc">Kürtçe egitim, yayin ve kamusal kullanim yasaklandi. Zorla yerlesiklestirilme politikalariyla asiret yapilari parçalandi.</div><div class="eimp">▲ Sistematik kültürel baski</div></div>
+    <div class="ev"><div class="edate">1942 — 1945</div><div class="ename">Komeley JK ve KDP-I'nin Kurulusu</div><div class="edesc">2. Dünya Savasi'nin kargasasi içinde Kürtler arasinda genis tabanli ilk modern örgütlenme. Qazi Muhemmed liderliginde KDP-I'ye dönüstü.</div><div class="eimp">▲ Modern örgütlenmenin baslangici</div></div>
+  </div>
+  <div class="foot"><span class="brand">Kürtler ve Iran</span><span class="pg">06 / 13</span></div>
+</div>
+
+<div class="card era gld">
+  <div class="strip"></div>
+  <div class="head"><div class="badge">1946</div><div class="etitle">Mahabad'da Kurulan<br>Kürdistan Cumhuriyeti</div><div class="pill">Kirilma</div></div>
+  <div class="events" style="top:100px">
+    <div class="ev"><div class="edate">22 Ocak 1946</div><div class="ename">Cumhuriyetin Ilani</div><div class="edesc">Sovyet isgalinin yarattigi güç boslugundan yararlanan Kürtler, Mahabad'da Kürdistan Cumhuriyeti'ni ilan etti. Qazi Muhemmed cumhurbaskani seçildi. Kürtçe egitim ve idare ilk kez resmi zemine oturdu.</div><div class="eimp">▲ Tarihsel zirve noktasi</div></div>
+    <div class="ev"><div class="edate">31 Mart 1947</div><div class="ename">Cumhuriyetin Sona Erisi ve Idam</div><div class="edesc">Iran ordusu Mahabad'i isgal etti. Qazi Muhemmed, Haci Baba Sex ve Seyfi Qazi idam edildi. Yalnizca 11 ay sürdü.</div><div class="eimp">▲ Kolektif bellege kazilan yenilgi</div></div>
+  </div>
+  <div class="foot"><span class="brand">Kürtler ve Iran</span><span class="pg">07 / 13</span></div>
+</div>
+
+<div class="card era red">
+  <div class="strip"></div>
+  <div class="head"><div class="badge">1953 – 1979</div><div class="etitle">Sah Dönemi:<br>Yeralti ve Sürgün</div><div class="pill">Silahli</div></div>
+  <div class="events" style="top:96px">
+    <div class="ev"><div class="edate">1953</div><div class="ename">ABD Destekli Darbe Sonrasi</div><div class="edesc">Muhammed Reza Sah'in iktidara dönmesinin ardindan Kürt siyasi yapilari yeralti çekildi. KDP-I merkezi 1960'ta Irak'taki daglara tasindi.</div><div class="eimp">▲ Sürgün siyaseti dönemi</div></div>
+    <div class="ev"><div class="edate">1960'lar — 1970'ler</div><div class="ename">Irak Üzerinden Mücadele</div><div class="edesc">Irak'a signan Kürt örgütleri, Baas yönetiminin destegiyle Iran'daki faaliyetlerini sürdürdü.</div><div class="eimp">▲ Dis destekli düsük yogunluklu çatisma</div></div>
+  </div>
+  <div class="foot"><span class="brand">Kürtler ve Iran</span><span class="pg">08 / 13</span></div>
+</div>
+
+<div class="card era red">
+  <div class="strip"></div>
+  <div class="head"><div class="badge">1979 – 1988</div><div class="etitle">Islam Devrimi<br>ve Yeni Çatisma</div><div class="pill">Silahli</div></div>
+  <div class="events" style="top:96px">
+    <div class="ev"><div class="edate">1979 — Ilkbahar</div><div class="ename">Devrim Sonrasi Kürt Ayaklanmasi</div><div class="edesc">Yeni Islam Cumhuriyeti özerkligji reddedince Kürt ayaklanmasi patlak verdi. Iran, Kürt bölgelerini agir askeri güçle bastirdi.</div><div class="eimp">▲ Devrimden kisa süre sonra yeni çatisma</div></div>
+    <div class="ev"><div class="edate">1980 — 1988</div><div class="ename">Iran-Irak Savasi Dönemi</div><div class="edesc">Savas kosullari Kürt örgütlerin hareket alanini hem genisletti hem daraltti. 1983'te silahlö Kürt gruplar büyük ölçüde etkisiz hale getirilmisti.</div><div class="eimp">▲ Iç bölünmeler ve bastirma</div></div>
+  </div>
+  <div class="foot"><span class="brand">Kürtler ve Iran</span><span class="pg">09 / 13</span></div>
+</div>
+
+<div class="card era red">
+  <div class="strip"></div>
+  <div class="head"><div class="badge">1989 – 1992</div><div class="etitle">Lider<br>Suikastlari</div><div class="pill">Silahli Baski</div></div>
+  <div class="events" style="top:88px">
+    <div class="ev"><div class="edate">1989 — Viyana</div><div class="ename">Ebdulrehman Qasimlo Suikasti</div><div class="edesc">KDP-I Genel Sekreteri Qasimlo, Iran yetkilileriyle müzakere masasindayken öldürüldü. Baris görüsmeleri sirasinda gerçeklesen bu suikast, Iran'in politikasini açikça ortaya koydu.</div><div class="eimp">▲ Uluslararasi boyutlu siyasi cinayet</div></div>
+    <div class="ev"><div class="edate">1992 — Berlin</div><div class="ename">Sadiq Serefkendi Suikasti</div><div class="edesc">Genel sekreterlige seçilen Serefkendi, Berlin'de silahli saldirida hayatini kaybetti. Iran'in kendi sinirlari disinda da Kürt liderlerini hedef aldinin kaniti oldu.</div><div class="eimp">▲ Avrupa'da Iran operasyonu</div></div>
+  </div>
+  <div class="foot"><span class="brand">Kürtler ve Iran</span><span class="pg">10 / 13</span></div>
+</div>
+
+<div class="card era grn">
+  <div class="strip"></div>
+  <div class="head"><div class="badge">2000'ler – 2016</div><div class="etitle">Hatemi Açilimi,<br>PJAK ve KDP-I</div><div class="pill">Kültürel / Silahli</div></div>
+  <div class="events" style="top:96px">
+    <div class="ev"><div class="edate">1997 — 2005</div><div class="ename">Reformcu Dönem: Sinirli Açilim</div><div class="edesc">Hatemi döneminde Kürtçe yayinlar ve kültürel dernekler kismen serbest birakildi. Siyasi haklar alaninda somut ilerleme saglanamadi.</div><div class="eimp">▲ Kismi kültürel rahatlama</div></div>
+    <div class="ev"><div class="edate">2004 — 2016</div><div class="ename">PJAK ve KDP-I'nin Eylemleri</div><div class="edesc">PJAK 2004'ten itibaren Iran güvenlik güçlerine operasyonlar düzenledi. KDP-I Genel Sekreteri Mistefa Hicri 2016'da örgütün yeniden silahli mücadeleye döndügünü ilan etti.</div><div class="eimp">▲ Diplomatik süreçten vazgeçis</div></div>
+  </div>
+  <div class="foot"><span class="brand">Kürtler ve Iran</span><span class="pg">11 / 13</span></div>
+</div>
+
+<div class="card era gld">
+  <div class="strip"></div>
+  <div class="head"><div class="badge">2022</div><div class="etitle">Jin, Jiyan, Azadi</div><div class="pill">Kitlesel</div></div>
+  <div class="events" style="top:84px">
+    <div class="ev"><div class="edate">13 Eylül 2022</div><div class="ename">Jina Mahsa Amini'nin Ölümü</div><div class="edesc">Kürt kadin Jina Mahsa Amini, Iran Ahlak Polisi tarafindan gözaltina alindi ve üç gün sonra hayatini kaybetti. "Jin, Jiyan, Azadi" slogani tüm dünyaya yayildi.</div><div class="eimp">▲ Küresel yanki uyandiran kivilcim</div></div>
+    <div class="ev"><div class="edate">Eylül 2022 — 2023</div><div class="ename">Dalga Dalga Yayilan Protestolar</div><div class="edesc">Jina'nin memleketi Seqiz'den baslayan protestolar Iran Kürdistani'nin tüm sehirlerine ve ülke geneline yayildi. Yüzlerce Kürt hayatini kaybetti.</div><div class="eimp">▲ Kürt direnisinin küresellemesi</div></div>
+  </div>
+  <div class="foot"><span class="brand">Kürtler ve Iran</span><span class="pg">12 / 13</span></div>
+</div>
+
+<div class="card closing">
+  <div class="bglines"></div><div class="strip"></div>
+  <div class="inner">
+    <div class="ck">Özet · Sonuç</div>
+    <div class="ct">~1200 Yillik<br>Kesintisiz Mücadele</div>
+    <div class="rule"></div>
+    <div class="sg">
+      <div class="sc"><span class="sn">~1200</span><span class="sl">Yillik Mücadele</span></div>
+      <div class="sc"><span class="sn">4</span><span class="sl">Aktif Örgüt</span></div>
+      <div class="sc"><span class="sn">1946</span><span class="sl">Kürdistan Cum.</span></div>
+      <div class="sc"><span class="sn">3</span><span class="sl">Büyük Isyan Dalgasi</span></div>
+    </div>
+    <div class="ot">Aktif Silahli Örgütler</div>
+    <div class="ol">
+      <span class="otag">KDP-I</span><span class="otag">Komala</span><span class="otag">PAK</span><span class="otag">PJAK</span>
+    </div>
+    <div class="cf">Kürtler ve Iran — Kronolojik Bellek · 13 / 13</div>
+  </div>
+</div>
+
+</div><!-- /grid -->
+
+<!-- LIGHTBOX -->
+<div class="lb" id="lb">
+  <div class="lb-box">
+    <button class="lb-x" id="lb-x">&#10005;</button>
+    <div class="lb-slot" id="lb-slot"></div>
+    <div class="lb-nav">
+      <button class="lb-btn" id="lb-prev">&#8592;</button>
+      <button class="lb-btn" id="lb-next">&#8594;</button>
+    </div>
+    <div class="lb-count" id="lb-count"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var cards = Array.prototype.slice.call(document.querySelectorAll('#grid .card'));
+  var total = cards.length;
+  var cur = 0;
+  var lb = document.getElementById('lb');
+  var slot = document.getElementById('lb-slot');
+  var count = document.getElementById('lb-count');
+
+  function open(i){ cur = i; render(); lb.classList.add('on'); }
+  function close(){ lb.classList.remove('on'); }
+  function nav(d){ cur = (cur + d + total) % total; render(); }
+  function render(){
+    var clone = cards[cur].cloneNode(true);
+    clone.style.cursor = 'default';
+    clone.onclick = null;
+    slot.innerHTML = '';
+    slot.appendChild(clone);
+    count.textContent = (cur+1) + ' / ' + total;
+  }
+
+  cards.forEach(function(c,i){ c.addEventListener('click', function(){ open(i); }); });
+  document.getElementById('lb-x').addEventListener('click', close);
+  document.getElementById('lb-prev').addEventListener('click', function(){ nav(-1); });
+  document.getElementById('lb-next').addEventListener('click', function(){ nav(1); });
+  lb.addEventListener('click', function(e){ if(e.target===lb) close(); });
+  document.addEventListener('keydown', function(e){
+    if(!lb.classList.contains('on')) return;
+    if(e.key==='Escape') close();
+    if(e.key==='ArrowRight') nav(1);
+    if(e.key==='ArrowLeft') nav(-1);
+  });
+})();
+</script>
+</body>
+</html>
